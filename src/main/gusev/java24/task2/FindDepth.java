@@ -7,29 +7,23 @@ import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
-public class Finder implements FileVisitor<Path> {
-    private int depth = 0;
+public class FindDepth extends SimpleFileVisitor<Path> {
+    private int depth = -1;
+    private int maxDepth = Integer.MIN_VALUE;
     @Override
     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-        return FileVisitResult.CONTINUE;
-    }
-
-    @Override
-    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        return FileVisitResult.CONTINUE;
-    }
-
-    @Override
-    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+        depth++;
+        if (depth>maxDepth)
+            maxDepth = depth;
         return FileVisitResult.CONTINUE;
     }
 
     @Override
     public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-        depth++;
+        depth--;
         return FileVisitResult.CONTINUE;
     }
     public int getDepth(){
-        return depth;
+        return maxDepth;
     }
 }
