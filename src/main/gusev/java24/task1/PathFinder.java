@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PathFinder {
     public static List<PathDifferenceStatus> difference(Path path1, Path path2) throws IOException {
-        List<PathDifferenceStatus> answer = new LinkedList<>();
+        List<PathDifferenceStatus> answer = new ArrayList<>();
         if (isNotExists(path1, path2)) {
             answer.add(PathDifferenceStatus.NotExists);
             return answer;
